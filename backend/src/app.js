@@ -31,4 +31,10 @@ app.get('/', async (req, res) => {
   });
 });
 
+app.get('/actions', async (req, res) => {
+  const records = await getActions();
+  res.json(records);
+});
+
+
 module.exports = app;

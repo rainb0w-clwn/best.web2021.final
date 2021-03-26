@@ -20,7 +20,7 @@ const checkEnviroment = async () => {
     await db.seed.run();
     logger.info('Database successfully reseted');
   } else {
-    await db.migrate.latest();
+    // await db.migrate.latest();
   }
 };
 
