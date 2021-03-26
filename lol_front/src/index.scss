@@ -1,0 +1,292 @@
+@import 'variables';
+@import '~bootstrap/scss/bootstrap';
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+    'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+    'Arimo', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+// Add fixed header height to scrollIntoView
+*[id] {
+  scroll-margin-top: 110px;
+}
+
+label {
+  margin: 0;
+}
+
+.form-group {
+  display: flex;
+  white-space: nowrap;
+}
+
+input[type='text'],
+select.form-control {
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid
+    map-get($map: $theme-colors, $key: 'primary');
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin-left: 10px;
+  padding: 0;
+  height: auto;
+  line-height: 1;
+  color: map-get($map: $theme-colors, $key: 'primary');
+}
+
+input[type='text']:focus,
+select.form-control:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+
+.select-row {
+  border-radius: 50rem;
+  transition: background-color 0.15s;
+  &:hover {
+    background-color: lighten(
+      map-get($map: $theme-colors, $key: 'primary'),
+      52%
+    );
+  }
+}
+
+.custom-switch,
+.custom-radio {
+  label {
+    cursor: pointer;
+    width: 100%;
+  }
+}
+
+.custom-control-input {
+  width: 0 !important;
+}
+
+.custom-switch .custom-control-label::after {
+  top: 50%;
+  transform: translate(0rem, -50%);
+}
+.custom-switch
+  .custom-control-input:checked
+  ~ .custom-control-label::after {
+  transform: translate(0.75rem, -50%);
+}
+
+.custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label {
+  cursor: not-allowed;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+  background-color: rgba(40, 167, 69, 0.7) !important;
+}
+.custom-switch
+  .custom-control-input:disabled:checked
+  ~ .custom-control-label::before {
+  background-color: rgba(105, 167, 120, 0.7) !important;
+}
+
+.custom-switch.custom-switch-red {
+  .custom-control-input:checked ~ .custom-control-label::before {
+    background-color: rgba(220, 53, 69, 0.7) !important;
+  }
+  .custom-control-input:disabled:checked
+    ~ .custom-control-label::before {
+    background-color: rgba(220, 115, 125, 0.7) !important;
+  }
+}
+
+.custom-switch .custom-control-label::before {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.custom-switch.custom-switch-right {
+  padding: 0;
+  .custom-control-label > * {
+    padding-right: 33px;
+  }
+}
+.custom-switch.custom-switch-right .custom-control-label::after {
+  right: 14px;
+  left: auto;
+}
+.custom-switch.custom-switch-right .custom-control-label::before {
+  right: 0;
+  left: auto;
+  transform: translate(0, -50%);
+}
+
+.custom-radio .custom-control-label::after,
+.custom-radio .custom-control-label::before {
+  top: 50%;
+  transform: translate(0, -50%);
+}
+.custom-radio.custom-radio-right {
+  padding: 0;
+  .custom-control-label > * {
+    padding-right: 22px;
+  }
+}
+.custom-radio.custom-radio-right .custom-control-label::after,
+.custom-radio.custom-radio-right .custom-control-label::before {
+  right: 0;
+  left: auto;
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.simulation-menu {
+  top: 0;
+  z-index: 1;
+
+  &-item {
+    transition: all 0.2s linear;
+    box-shadow: inset 0px -5px 0px map-get($map: $theme-colors, $key:
+          'primary');
+    h5 {
+      transition: all 0.2s linear;
+      font-weight: normal;
+    }
+    &:hover {
+      h5 {
+        transform: scale(1.1);
+      }
+    }
+    &.active {
+      h5 {
+        font-weight: bold;
+      }
+      box-shadow: inset 5px 5px 0px
+          map-get($map: $theme-colors, $key: 'primary'),
+        inset -5px 0px 0px map-get($map: $theme-colors, $key:
+              'primary');
+    }
+
+    &--small {
+      p {
+        transition: all 0.2s linear;
+      }
+      &:hover {
+        p {
+          transform: scale(1.1);
+        }
+      }
+    }
+
+    &--big {
+      &.active {
+        box-shadow: inset 0px 7px 0px
+            map-get($map: $theme-colors, $key: 'primary'),
+          inset 0px -7px 0px map-get($map: $theme-colors, $key:
+                'primary');
+      }
+    }
+  }
+}
+
+.bpt-big {
+  .bpt-item {
+    font-size: 3rem !important;
+    @media screen and (min-width: 992px) {
+      font-size: 4rem !important;
+    }
+  }
+}
+
+.injection,
+.threats {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  transition: box-shadow 0.15s;
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+.injection-header,
+.injection-body {
+  transition: background-color 0.15s;
+}
+
+.btn {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+  &:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+  }
+}
+
+.threats-body {
+  overflow-y: scroll;
+  max-height: 367px;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.projector-button {
+  overflow-x: scroll;
+  white-space: nowrap;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.bg-danger-light {
+  background-color: rgba(220, 53, 69, 0.1) !important;
+}
+
+.bg-warning-light {
+  background-color: rgba(255, 193, 7, 0.1) !important;
+}
+
+.bg-success-light {
+  background-color: rgba(40, 167, 69, 0.1) !important;
+}
+
+@media screen and (max-width: 991px) {
+  .log-filter {
+    label {
+      font-size: 11px !important;
+    }
+  }
+}
+
+.text-disabled {
+  color: #d4d4d4 !important;
+}
+
+.finish-confirmation-modal {
+  .modal-content {
+    border-radius: 1rem;
+  }
+}
+
+.btn-group-toggle {
+  .btn-outline-primary:not(.active):hover {
+    background-color: white;
+    color: map-get($map: $theme-colors, $key: 'primary');
+  }
+}
+
+.thick-border.border-primary {
+  border-width: 0.5em !important;
+}

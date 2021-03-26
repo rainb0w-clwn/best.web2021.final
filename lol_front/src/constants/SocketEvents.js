@@ -1,0 +1,18 @@
+export default {
+  CONNECT: 'connect',
+  RECONNECT: 'reconnect',
+  DISCONNECT: 'disconnect',
+  CREATEGAME: 'createGame',
+  JOINGAME: 'joinGame',
+  GAMEUPDATED: 'gameUpdated',
+  CHANGEMITIGATION: 'changeMitigation',
+  PERFORMACTION: 'performAction',
+  PERFORMCURVEBALL: 'performCurveball',
+  STARTSIMULATION: 'startSimulation',
+  PAUSESIMULATION: 'pauseSimulation',
+  FINISHSIMULATION: 'finishSimulation',
+  RESTORESYSTEM: 'restoreSystem',
+  DELIVERINJECTION: 'deliverInjection',
+  RESPONDTOINJECTION: 'respondToInjection',
+  NONCORRECTRESPONDTOINJECTION: 'nonCorrectRespondToInjection',
+};
