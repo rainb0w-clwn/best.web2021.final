@@ -35,6 +35,10 @@ let setNewMonth = async (gameId) => {
     await db('game')
         .where({id: gameId})
         .increment('currentMonth', 1);
+    let game = await db('game').select().where({id: gameId}).first();
+    if (game.currentMonth > game.monthDistribution.length ){
+        throw new Error('game must to be stopped!!!!')
+    }
 }
 
 let reduceBalanceForService = async (gameId) => {
@@ -51,8 +55,6 @@ let reduceBalanceForService = async (gameId) => {
         .first();
     let totalReduce = 0;
     for (const azs of game.azs) {
-        console.log('wtf');
-        console.log(azs.state);
         if (azs.state == 'ready') {
             totalReduce += config.costAzs;
         }
@@ -150,7 +152,6 @@ let reduceBalanceForSalary = async (gameId) => {
             }
         }
     }
-    console.log('reduce', totalReduce);
     if (totalReduce > 0) {
         await db('game')
             .where({id: gameId})
@@ -209,6 +210,7 @@ async function fixProfit(gameId) {
             description: `Fix profit for current month = ` + game.currentMonth,
         });
     }
+    console.log("CurrentMonth: ", game.currentMonth);
 }
 
 async function buyTankersToStabilizate(gameId) {
@@ -280,7 +282,6 @@ async function checkCurrentSystemState(gameId) {
         for (const azs of allAzs) {
             game = await makePlace(azs.id, game);
             possibleDistribution = countPossibleRealization(game);
-            console.log('pd', possibleDistribution);
             if (!checkDistribution(totalDistribution, possibleDistribution)) {
                 break;
             }
@@ -294,7 +295,6 @@ function countPossibleRealization(game) {
 }
 
 function checkDistribution(totalDistribution, possibleDistribution) {
-    console.log('tD', totalDistribution);
     return totalDistribution > possibleDistribution;
 }
 
@@ -304,7 +304,6 @@ async function makePlace(azs_id, game) {
             azs_id: azs_id,
             state: 'building'
         }).returning('id')
-    console.log(work_place);
     await db('game_log').insert({
         game_id: game.id,
         game_timer: getTimeTaken(game),
@@ -407,7 +406,6 @@ async function makeTankerDelivery(gameId) {
     if (currentOilStore > 0) {
         let tanker = await db('tanker').select().where({game_id: gameId, state: 'ready'});
         let counter = 0;
-        console.log(game);
         for (const azs of game.azs) {
             let placeCount = 0;
             for (let place of game.place) {
@@ -416,7 +414,6 @@ async function makeTankerDelivery(gameId) {
                 }
             }
             let possibleProfit = placeCount * Math.floor(config.monthInSeconds / config.timeServiceCar) * config.timeTanker;
-            console.log('posibProfit', possibleProfit);
             if (currentOilStore < possibleProfit) {
                 possibleProfit = currentOilStore;
             }
@@ -432,7 +429,6 @@ async function makeTankerDelivery(gameId) {
 }
 
 async function returnTanker(tanker, azs_id, profit, game) {
-    console.log('alooo',tanker.id);
     await db('azs').increment('balance', profit).where({id: azs_id})
     await db('tanker').update({state: 'to_store', current_azs: 0, current_load: 0}).where({id: tanker.id})
     await db('game_log').insert({
@@ -455,8 +451,6 @@ async function tankerReturned(tanker, game) {
 }
 
 async function performTankerDelivery(tanker, azs_id, profit, game) {
-    console.log('alooo',tanker.id);
-    console.log('alooo1',azs_id.id);
     await db('tanker').update({state: 'to_azs', current_azs: azs_id, current_load: profit}).where({id: tanker.id})
     await db('game_log').insert({
         game_id: game.id,

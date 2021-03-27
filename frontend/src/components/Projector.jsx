@@ -32,9 +32,9 @@ const Projector = view(() => {
         </div>
         {gameState === GameStates.ASSESSMENT ? (
           <EventLogs />
-        ) : (
-          <Systems big centerHeader />
-        )}
+        ) : <div></div>
+
+        }
       </Container>
     </>
   );

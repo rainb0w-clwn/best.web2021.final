@@ -36,7 +36,6 @@ const getGame = async (id) => {
             `LEFT JOIN (SELECT gl.game_id, array_agg(to_json(gl)) AS logs FROM game_log gl GROUP BY gl.game_id) l ON l.game_id = game.id`,
         )
         .first();
-    console.log(lol);
     return lol;
 }
 
@@ -218,7 +217,6 @@ const performAction = async ({gameId, actionId, params}) => {
             }
             oldMonthDistribution = oldMonthDistribution.slice(0, game.currentMonth+1);
             oldMonthDistribution = oldMonthDistribution.concat(monthDistribution);
-            console.log(oldMonthDistribution)
             await db('game')
                 .where({id: gameId})
                 .update({

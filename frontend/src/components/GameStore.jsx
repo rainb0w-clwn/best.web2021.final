@@ -161,9 +161,12 @@ socket.on(SocketEvents.CONNECT, () => {
 });
 
 let timerId = setTimeout(function tick() {
-  if (gameStore.state === GameStates.SIMULATION) {
+  let lol = {...gameStore}
+  if (lol.state === GameStates.SIMULATION) {
     socket.emit(SocketEvents.UPDATEGAME)
     timerId = setTimeout(tick, 500); // (*)
+  } else {
+    timerId = setTimeout(tick, 2000); // (*)
   }
 }, 1000);
 
