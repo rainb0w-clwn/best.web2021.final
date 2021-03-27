@@ -15,4 +15,5 @@ export default {
   DELIVERINJECTION: 'deliverInjection',
   RESPONDTOINJECTION: 'respondToInjection',
   NONCORRECTRESPONDTOINJECTION: 'nonCorrectRespondToInjection',
+  UPDATEGAME: 'updateGame',
 };

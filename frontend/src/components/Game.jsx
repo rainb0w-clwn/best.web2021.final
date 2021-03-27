@@ -3,7 +3,7 @@ import qs from 'query-string';
 import { view } from '@risingstack/react-easy-state';
 import { Spinner } from 'react-bootstrap';
 
-import { GameStates } from '../constants';
+import {GameStates, SocketEvents} from '../constants';
 import EnterGame from './EnterGame';
 import Mitigations from './Mitigations/Mitigations';
 import Simulation from './Simulation/Simulation';

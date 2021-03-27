@@ -17,7 +17,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
       </Row>
       <Row className="m-0 border-primary border-bottom border-top shadow-sm">
         <Col
-          xs={3}
+          xs={4}
           className={classNames(
             'simulation-menu-item cursor-pointer border-primary border-right p-0',
             {
@@ -29,31 +29,19 @@ const Header = view(({ activeTab, setActiveTab }) => {
           <h5 className="my-2">ACTION TABLE</h5>
         </Col>
         <Col
-          xs={3}
+          xs={4}
           className={classNames(
             'simulation-menu-item cursor-pointer border-primary border-right p-0',
             {
-              active: activeTab === SimulationTabs.CAMPAIGN_HQ,
+              active: activeTab === SimulationTabs.AZS_LIST,
             },
           )}
-          onClick={() => setActiveTab(SimulationTabs.CAMPAIGN_HQ)}
+          onClick={() => setActiveTab(SimulationTabs.AZS_LIST)}
         >
-          <h5 className="my-2">CAMPAIGN HQ</h5>
+          <h5 className="my-2">GAS STATIONS</h5>
         </Col>
         <Col
-          xs={3}
-          className={classNames(
-            'simulation-menu-item cursor-pointer border-primary border-right p-0',
-            {
-              active: activeTab === SimulationTabs.LOCAL_BRANCH,
-            },
-          )}
-          onClick={() => setActiveTab(SimulationTabs.LOCAL_BRANCH)}
-        >
-          <h5 className="my-2">LOCAL BRANCH</h5>
-        </Col>
-        <Col
-          xs={3}
+          xs={4}
           className={classNames(
             'simulation-menu-item cursor-pointer p-0',
             {
@@ -71,7 +59,7 @@ const Header = view(({ activeTab, setActiveTab }) => {
         {activeTab === SimulationTabs.ACTION_TABLE && (
           <>
             <Col
-              md={2}
+              md={12}
               className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
               onClick={() =>
                 document
@@ -81,121 +69,14 @@ const Header = view(({ activeTab, setActiveTab }) => {
                   })
               }
             >
-              <p className="my-0">HQ ACTIONS</p>
-            </Col>
-            <Col
-              md={2}
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document
-                  .querySelector('#local_actions')
-                  ?.scrollIntoView({
-                    behavior: 'smooth',
-                  })
-              }
-            >
-              <p className="my-0">LOCAL ACTIONS</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document.querySelector('#curveball')?.scrollIntoView({
-                  behavior: 'smooth',
-                })
-              }
-            >
-              <p className="my-0">CURVEBALL EVENTS</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document.querySelector('#systems')?.scrollIntoView({
-                  behavior: 'smooth',
-                })
-              }
-            >
-              <p className="my-0">TECHNICAL SYSTEMS</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
-              onClick={() =>
-                document
-                  .querySelector('#mitigations')
-                  ?.scrollIntoView({
-                    behavior: 'smooth',
-                  })
-              }
-            >
-              <p className="my-0">PURCHASED ITEMS</p>
-            </Col>
-          </>
-        )}
-        {(activeTab === SimulationTabs.CAMPAIGN_HQ ||
-          activeTab === SimulationTabs.LOCAL_BRANCH) && (
-          <>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document.querySelector('#injects')?.scrollIntoView({
-                  behavior: 'smooth',
-                })
-              }
-            >
-              <p className="my-0">EVENTS & RESPONSES</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document
-                  .querySelector('#mitigations')
-                  ?.scrollIntoView({
-                    behavior: 'smooth',
-                  })
-              }
-            >
-              <p className="my-0">PURCHASES</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document
-                  .querySelector('#system_actions')
-                  ?.scrollIntoView({
-                    behavior: 'smooth',
-                  })
-              }
-            >
-              <p className="my-0">SYSTEM RESTORE</p>
-            </Col>
-            <Col
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
-              onClick={() =>
-                document
-                  .querySelector('#resolved_injects')
-                  ?.scrollIntoView({
-                    behavior: 'smooth',
-                  })
-              }
-            >
-              <p className="my-0">RESOLVED EVENTS</p>
+              <p className="my-0">USER ACTIONS</p>
             </Col>
           </>
         )}
         {activeTab === SimulationTabs.LOGS_AND_THREATS && (
           <>
             <Col
-              xs={6}
-              className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer border-primary border-right p-0"
-              onClick={() =>
-                document.querySelector('#threats')?.scrollIntoView({
-                  behavior: 'smooth',
-                })
-              }
-            >
-              <p className="my-0">THREATS</p>
-            </Col>
-            <Col
-              xs={6}
+              xs={12}
               className="d-flex justify-content-center align-items-center simulation-menu-item--small cursor-pointer p-0"
               onClick={() =>
                 document.querySelector('#logs')?.scrollIntoView({

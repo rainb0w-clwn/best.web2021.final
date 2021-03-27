@@ -140,23 +140,13 @@ exports.up = async (knex) => {
     tbl.integer('game_timer').notNullable().defaultTo(0);
     tbl
       .enu('type', [
-        'Budget Item Purchase',
-        'System Restore Action',
-        'Campaign Action',
+        'User Action',
         'Game State Changed',
-        'Curveball Event',
       ])
       .notNullable();
     tbl.string('description');
-    tbl.string('mitigation_type'); // Budget Item Purchase
-    tbl.string('mitigation_id'); // Budget Item Purchase
-    tbl.foreign('mitigation_id').references('id').inTable('mitigation');
-    tbl.string('response_id'); // System Restore Action
-    tbl.foreign('response_id').references('id').inTable('response');
     tbl.string('action_id'); // Action
     tbl.foreign('action_id').references('id').inTable('action');
-    tbl.string('curveball_id'); // Curveball
-    tbl.foreign('curveball_id').references('id').inTable('curveball');
   });
 };
 

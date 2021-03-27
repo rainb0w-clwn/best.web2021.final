@@ -21,10 +21,12 @@ module.exports = (http) => {
       logger.info('Facilitator DISCONNECT');
     });
 
-    socket.on(SocketEvents.CREATEGAME, async (id, callback) => {
+    socket.on(SocketEvents.CREATEGAME, async (id, monthDistribution, callback) => {
       logger.info('CREATEGAME: %s', id);
       try {
-        const game = await createGame(id);
+        monthDistribution = monthDistribution.split(',')
+        for(let i=0; i<monthDistribution.length; i++) { monthDistribution[i] = parseInt(monthDistribution[i], 10); }
+        const game = await createGame(id, monthDistribution);
         if (gameId) {
           await socket.leave(gameId);
         }
@@ -33,6 +35,7 @@ module.exports = (http) => {
         callback({game});
       } catch (_) {
         callback({error: 'Game id already exists!'});
+        console.error(_);
       }
     });
 
@@ -88,12 +91,13 @@ module.exports = (http) => {
       }
     });
 
-    socket.on(SocketEvents.PERFORMACTION, async ({actionId}, callback) => {
-      logger.info('PERFORMACTION: %s', JSON.stringify({gameId, actionId}));
+    socket.on(SocketEvents.PERFORMACTION, async ({actionId, params}, callback) => {
+      logger.info('PERFORMACTION: %s', JSON.stringify({gameId, actionId, params}));
       try {
         const game = await performAction({
           gameId,
           actionId,
+          params,
         });
         io.in(gameId).emit(SocketEvents.GAMEUPDATED, game);
         callback({game});
@@ -102,10 +106,10 @@ module.exports = (http) => {
       }
     });
     socket.on(SocketEvents.UPDATEGAME, async () => {
-      io.in(gameId).emit(SocketEvents.GAMEUPDATED, game);
       const game = await getGame(
           gameId
       );
+      io.in(gameId).emit(SocketEvents.GAMEUPDATED, game);
     })
     return io;
   });

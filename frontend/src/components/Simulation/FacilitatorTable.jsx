@@ -13,8 +13,8 @@ import useTimeTaken from '../../hooks/useTimeTaken';
 
 const FacilitatorTable = view(({ activeTab }) => {
   const location = useMemo(() => {
-    if (activeTab === SimulationTabs.CAMPAIGN_HQ) {
-      return 'hq';
+    if (activeTab === SimulationTabs.AZS_LIST) {
+      return 'azs';
     }
     return 'local';
   }, [activeTab]);

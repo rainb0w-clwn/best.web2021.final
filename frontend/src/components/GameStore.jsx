@@ -2,6 +2,7 @@ import qs from 'query-string';
 import { store } from '@risingstack/react-easy-state';
 import io from 'socket.io-client';
 import { keyBy as _keyBy } from 'lodash';
+import { GameStates } from '../constants';
 
 import { SocketEvents } from '../constants';
 
@@ -47,34 +48,24 @@ export const gameStore = store({
   // HELPERS
   setGame: (game) => {
     Object.keys(game).forEach((key) => {
-      if (key === 'systems') {
-        gameStore.systems = game.systems.reduce(
-          (acc, { system_id, state }) => ({
-            ...acc,
-            [system_id]: state,
-          }),
-          {},
+      if (key === 'azs') {
+        gameStore.azs = _keyBy(
+            game.azs,
+            'id',
         );
-      } else if (key === 'mitigations') {
-        gameStore.mitigations = game.mitigations.reduce(
-          (acc, { mitigation_id, location, state }) => ({
-            ...acc,
-            [`${mitigation_id}_${location}`]: state,
-          }),
-          {},
+      } else if (key === 'staff') {
+        gameStore.staff = _keyBy(
+            game.staff,
+            'id',
         );
-        gameStore.preparationMitigations = game.mitigations.reduce(
-          (acc, { mitigation_id, location, preparation }) => ({
-            ...acc,
-            [`${mitigation_id}_${location}`]: preparation,
-          }),
-          {},
-        );
-      } else if (key === 'injections') {
+      } else if (key === 'tunker') {
         gameStore.injections = _keyBy(
-          game.injections,
-          'injection_id',
+            game.tunker,
+            'id',
         );
+      }
+      else if (key === 'monthDistribution') {
+        gameStore.monthDistribution = {...game.monthDistribution};
       } else {
         gameStore[key] = game[key];
       }
@@ -99,9 +90,9 @@ export const gameStore = store({
 
   // ACTIONS
   actions: {
-    enterGame: ({ eventType, gameId, rememberGameId }) => {
+    enterGame: ({ eventType, gameId, monthDistribution, rememberGameId }) => {
       gameStore.loading = true;
-      socket.emit(eventType, gameId, ({ error, game }) => {
+      socket.emit(eventType, gameId, monthDistribution, ({ error, game }) => {
         if (!error) {
           gameStore.setGame(game);
           if (rememberGameId) {
@@ -127,12 +118,13 @@ export const gameStore = store({
         params,
         ...(showInfo ? ['Item bought'] : []),
       ),
-    performAction: (params) =>
+    performAction: (params) => {
+        console.log(params);
       gameStore.emitEvent(
         SocketEvents.PERFORMACTION,
         params,
         'Action Performed',
-      ),
+      )},
     performCurveball: (params) =>
       gameStore.emitEvent(
         SocketEvents.PERFORMCURVEBALL,
@@ -168,9 +160,15 @@ socket.on(SocketEvents.CONNECT, () => {
   gameStore.socketConnected = true;
 });
 
+let timerId = setTimeout(function tick() {
+  if (gameStore.state === GameStates.SIMULATION) {
+    socket.emit(SocketEvents.UPDATEGAME)
+    timerId = setTimeout(tick, 500); // (*)
+  }
+}, 1000);
+
 // LISTEN TO GAME STATE UPDATES
 socket.on(SocketEvents.GAMEUPDATED, (g) => gameStore.setGame(g));
-
 // RECONNECT GAME ROOM IF CONNECTION LOST
 socket.on(SocketEvents.RECONNECT, () => {
   if (gameStore.id) {
@@ -196,6 +194,7 @@ if (gameIdFromQuery) {
   socket.emit(
     SocketEvents.JOINGAME,
     gameIdFromQuery,
+    null,
     ({ error, game }) => {
       if (!error) {
         gameStore.setGame(game);

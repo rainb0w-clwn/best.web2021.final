@@ -34,11 +34,5 @@
     "pino-pretty": "4.1.0",
     "prettier": "^2.0.5",
     "supertest": "4.0.2"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run lint",
-      "pre-push": "npm run test"
-    }
   }
 }

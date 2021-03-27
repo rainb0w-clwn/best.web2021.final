@@ -26,8 +26,8 @@ const Simulation = () => {
         return <LogsAndThreats />;
       case SimulationTabs.ACTION_TABLE:
         return <ActionTable />;
-      case SimulationTabs.CAMPAIGN_HQ:
-        return <FacilitatorTable activeTab="hq" />;
+      case SimulationTabs.AZS_LIST:
+        return <FacilitatorTable activeTab="azs" />;
       case SimulationTabs.LOCAL_BRANCH:
         return <FacilitatorTable activeTab="local" />;
       default:

@@ -14,6 +14,8 @@ const EnterGame = view(() => {
   } = gameStore;
 
   const [gameId, setGameId] = useState(gameIdFromLocalStorage || '');
+  const [monthDistribution, setMonthDistribution] = useState('');
+
   const [rememberGameId, setRememberGameId] = useState(
     !!gameIdFromLocalStorage,
   );
@@ -34,6 +36,7 @@ const EnterGame = view(() => {
               enterGame({
                 eventType: SocketEvents.CREATEGAME,
                 gameId,
+                monthDistribution,
                 rememberGameId,
               });
             }}
@@ -51,6 +54,21 @@ const EnterGame = view(() => {
                 value={gameId}
                 autoComplete="off"
                 style={{ fontSize: '1.125rem' }}
+              />
+            </Form.Group>
+            <Form.Group controlId="monthDistribution">
+              <Form.Label>
+                <h5 className="font-weight-normal mb-0">
+                  Start month oil distribution:
+                </h5>
+              </Form.Label>
+              <Form.Control
+                  type="text"
+                  placeholder="Month oil distribution"
+                  onChange={(event) => setMonthDistribution(event.target.value)}
+                  value={monthDistribution}
+                  autoComplete="off"
+                  style={{ fontSize: '1.125rem' }}
               />
             </Form.Group>
             <Form.Group controlId="RememberGameId">
@@ -73,6 +91,7 @@ const EnterGame = view(() => {
                     enterGame({
                       eventType: SocketEvents.CREATEGAME,
                       gameId,
+                      monthDistribution,
                       rememberGameId,
                     })
                   }

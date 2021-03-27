@@ -29,7 +29,7 @@ const TimeTaken = view(({ big }) => {
 
 // BudgetPollTimer
 const BPT = view(({ big }) => {
-  const { budget, poll } = gameStore;
+  const { budget ,currentMonth} = gameStore;
 
   return (
     <Row
@@ -52,19 +52,24 @@ const BPT = view(({ big }) => {
           {numberToUsd(budget).replace('$', '$ ')}
         </h4>
       </Col>
-      <Col
-        xs={6}
-        md={4}
-        className={classNames('px-2 d-flex', {
-          'justify-content-center': !big,
-          'flex-column align-items-center': big,
-        })}
-      >
-        {big && (
-          <h2 className="font-weight-bold my-2">Support in Polls</h2>
-        )}
-        <h4 className="bpt-item font-weight-normal mb-0">{poll} %</h4>
-      </Col>
+        <Col
+            xs={6}
+            md={4}
+            style={{ whiteSpace: 'nowrap' }}
+            className={classNames('px-2', {
+                'd-flex flex-column align-items-center': big,
+            })}
+        >
+            {big && (
+                <h2 className="font-weight-bold my-2">CurrentMonth</h2>
+            )}
+            <h4 className="bpt-item font-weight-normal mb-0">
+                {!big &&
+                <h5 className="font-weight-bold my-2">CurrentMonth:  {currentMonth}</h5>
+                }
+
+            </h4>
+        </Col>
       <Col
         xs={12}
         md={4}
